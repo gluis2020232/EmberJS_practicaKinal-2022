@@ -6,7 +6,7 @@
         <span class='float-right'>
           <StarRating
             @rating={{song.rating}}
-            @onUpdate={{set song 'rating'}}
+            @onUpdate={{fn this.updateRating song}}
           />
         </span>
       </li>
@@ -14,7 +14,7 @@
   </ul>
 {{else}}
   <p class='text-center'>
-    The band has no songs yet.
+    La banda aún no tiene canciones.
   </p>
 {{/if}}
 

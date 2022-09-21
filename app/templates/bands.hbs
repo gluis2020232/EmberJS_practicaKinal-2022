@@ -3,12 +3,17 @@
 <div class="w-1/3 px-2">
   <ul class="pl-2 pr-8">
     {{#each @model as |band|}}
-      <li class="mb-2">
-        <LinkTo
-          @route="bands.band.songs"
-          @model={{band.id}}> {{band.name}}
-        </LinkTo>
-      </li>
+      {{#if band.id}}
+        {{log band}}
+        <li class="mb-2 hover:bg-sky-700">
+          <LinkTo
+            @route="bands.band"
+            @model={{band.id}}
+          >
+            {{band.name}}
+          </LinkTo>
+        </li>
+      {{/if}}
     {{/each}}
   </ul>
   <LinkTo
@@ -16,7 +21,7 @@
     class="inline-block ml-2 mt-2 p-2 rounded bg-purple-600 shadow-md
     hover:shadow-lg hover:text-white hover:bg-purple-500 focus:outlinenone"
   >
-  Agregar una Banda
+  Agregar una bandas
   </LinkTo>
 </div>
 

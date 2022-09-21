@@ -2,27 +2,40 @@
 import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import Song from 'rarwe/models/song';
 import { inject as service } from '@ember/service';
 
 export default class BandsBandSongsController extends Controller {
   @tracked showAddSong = true;
   @tracked title = '';
+  @service catalog;
 
-  //new
-  @service catalog; //
+
+  //Funcion Actualizacion de canciones
+  @action
+  async updateRating(song, rating) {
+    song.rating = rating;
+
+    this.catalog.update('song', song, { rating });
+  }
+  //Funcion Actualizacion de canciones
+
 
   @action
   updateTitle(event) {
     this.title = event.target.value;
   }
 
+  //Trasladamos la creacion de canciones al back-end
   @action
-  saveSong() {
-    let song = new Song({ title: this.title, band: this.model });
+    async saveSong() {
 
-    //Anadir canciones recien creadas
-    this.catalog.add('song', song);
+    //usar catalog.create para crear una canción
+    let song = await this.catalog.create(
+      'song',
+      { title: this.title },
+      { band: { data: { id: this.model.id, type: 'bands' } } }
+      );
+    //usar catalog.create para crear una canción
 
     this.model.songs = [...this.model.songs, song];
     this.title = '';
