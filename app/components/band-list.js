@@ -1,0 +1,18 @@
+import Component from '@glimmer/component';
+import { inject as service } from '@ember/service';
+
+export default class BandListComponent extends Component {
+  @ service router;
+
+  //Resaltar el enlace de la banda activa
+  //Aumentar cada elemento de la banda en la lista con la propiedad isActive:
+
+  get bands() {
+  	return this.args.bands.map(band => {
+  	  return {
+  	  	band,
+  	  	isActive: this.router.isActive('bands.band', band)
+  	  }
+  	});
+  }
+}

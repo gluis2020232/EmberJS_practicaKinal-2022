@@ -31,7 +31,7 @@ export default class CatalogService extends Service {
 	//--Extraer las relaciones para cada banda
 	async fetchAll(type) {
 	  if (type === 'bands') {
-	  	let response = await fetch('/bands');
+	  	let response = await fetch('/bands'); //Obtener todas las bandas
 	  	let json = await response.json();
 
 	  	this.loadAll(json);
@@ -63,7 +63,7 @@ export default class CatalogService extends Service {
 
 	//Creacion new metodo instacia modelo
 	load(response) {
-	  return this._loadResource(response.data);
+	  return this._loadResource(response.data);  //Enviando objeto que contiene data
 	}
 	//Creacion new metodo instacia modelo
 
@@ -74,12 +74,12 @@ export default class CatalogService extends Service {
 	  let { id, type, attributes, relationships } = data;
 	  if (type === 'bands') {
 	  	let rels = extractRelationships(relationships);
-	  	record = new Band({ id, ...attributes }, rels);
+	  	record = new Band({ id, ...attributes }, rels);    //Creo una nueva banda
 	  	this.add('band', record);
 	  }
 	  if (type === 'songs') {
 	  	let rels = extractRelationships(relationships);
-	  	record = new Song({ id, ...attributes }, rels);
+	  	record = new Song({ id, ...attributes }, rels);    //Creo una nueva cancion
 	  	this.add('song', record);
 	  }
 	  return record;
@@ -103,25 +103,27 @@ export default class CatalogService extends Service {
 	//Obtener relaciones
 
 
+    //Estructura para enviar un POST
 	//Creacion new metodo instacia modelo
 	async create(type, attributes, relationships={}) {
 	  let payload = {
 	  	data: {
-	  	  type: type === 'band' ? 'bands' : 'songs',
-	  	  attributes,
-	  	  relationships
+	  	  type: type === 'band' ? 'bands' : 'songs',  //tipo songs
+	  	  attributes,             //Guardamos el title
+	  	  relationships          //relacion a band
 	  	}
 	  };
+	  //(metodo) fetch hace un peticion a songs
 	  let response = await fetch(type === 'band' ? '/bands' : '/songs',
 	  	{
 	  	  method: 'POST',
 	  	  headers: {
-	  	  	'Content-Type': 'application/vnd.api+json'
+	  	  	'Content-Type': 'application/vnd.api+json'   //Enviando un vnd.api+json
 	  	  },
-	  	  body: JSON.stringify(payload)
+	  	  body: JSON.stringify(payload)   //"stringify" convertir objeto javaScript a un json
 	  	});
-	  let json = await response.json();
-	  return this.load(json);
+	  let json = await response.json();  //convertir response a json
+	  return this.load(json);            //retornar lo que me retorna la funcion "load"
 	}
 	//Creacion new metodo instacia modelo
 
@@ -140,7 +142,7 @@ export default class CatalogService extends Service {
 	  await fetch(url, {
 	  	method: 'PATCH',
 	  	headers: {
-	  	  'Content-Type': 'application/vnd.api+json'
+	  	  'Content-Type': 'application/vnd.api+json'  //Enviando un vnd.api+json
 	  	},
 	  	body: JSON.stringify(payload)
 	  });

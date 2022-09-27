@@ -29,11 +29,11 @@ export default class BandsBandSongsController extends Controller {
   @action
     async saveSong() {
 
-    //usar catalog.create para crear una canción
+    //usar this.catalog.create para crear una canción
     let song = await this.catalog.create(
-      'song',
-      { title: this.title },
-      { band: { data: { id: this.model.id, type: 'bands' } } }
+      'song',                                //reference type catalogo
+      { title: this.title },                                    //reference attributes catalogo
+      { band: { data: { id: this.model.id, type: 'bands' } } }  //reference relationships={} catalogo
       );
     //usar catalog.create para crear una canción
 
