@@ -47,8 +47,7 @@ export default class BandsNewController extends Controller {
     }
 
     @action
-      async saveBand() {
-      //Crear banda
+      async saveBand() {      //Creacion de banda
       let band = await this.catalog.create('band', { name: this.name });   //El catalago lo usamos para ir a traer todas las bandas
 
       this.confirmedLeave = true; //modal

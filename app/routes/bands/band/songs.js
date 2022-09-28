@@ -5,6 +5,15 @@ export default class BandsBandSongsRoute extends Route {
 
     @service catalog;                      //Actualizar el enlace del modelo de la ruta
 
+
+  //Parametro de consulta
+    queryParams = {
+      sortBy: {
+        as: 's'
+      }
+    }
+
+
     async model() {
       console.log('Estoy en la ruta songs');
       let band = this.modelFor('bands.band');

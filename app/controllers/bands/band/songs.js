@@ -8,8 +8,22 @@ export default class BandsBandSongsController extends Controller {
   @tracked showAddSong = true;
   @tracked title = '';
   @tracked sortBy = 'title';
+  @tracked searchTerm = '';
   @service catalog;
 
+
+  //Buscador de canciones
+  get matchingSongs() {
+    let searchTerm = this.searchTerm.toLowerCase();
+    return this.model.songs.filter(song => {
+      return song.title.toLowerCase().includes(searchTerm);
+    })
+  }
+
+  @action
+  updateSearchTerm(event) {
+    this.searchTerm = event.target.value;
+  }
 
   //Lista ordenada de canciones
   get sortedSongs() {
@@ -21,7 +35,7 @@ export default class BandsBandSongsController extends Controller {
       isDescendingSort = true;
     }
 
-    return [...this.model.songs].sort((song1, song2) => {
+    return this.matchingSongs.sort((song1, song2) => {
 
       if (song1[sortBy] < song2[sortBy]) {
         return isDescendingSort ? 1 : -1;
