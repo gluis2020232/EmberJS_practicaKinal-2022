@@ -72,10 +72,10 @@ export default class CatalogService extends Service {
 	_loadResource(data) {
 	  let record;
 	  let { id, type, attributes, relationships } = data;
-	  if (type === 'bands') {
+	  if (type === 'bands') {                              //Si el tipo era bandas le sacamos relaciones
 	  	let rels = extractRelationships(relationships);
 	  	record = new Band({ id, ...attributes }, rels);    //Creo una nueva banda
-	  	this.add('band', record);
+	  	this.add('band', record);                          //Lo agregamos
 	  }
 	  if (type === 'songs') {
 	  	let rels = extractRelationships(relationships);
