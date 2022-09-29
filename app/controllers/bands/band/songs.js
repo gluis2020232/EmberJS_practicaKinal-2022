@@ -3,6 +3,7 @@ import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { capitalize } from 'rarwe/helpers/capitalize';
 
 export default class BandsBandSongsController extends Controller {
   @tracked showAddSong = true;
@@ -14,10 +15,11 @@ export default class BandsBandSongsController extends Controller {
 
   //Buscador de canciones
   get matchingSongs() {
+    console.log('In matchingSongs');
     let searchTerm = this.searchTerm.toLowerCase();
     return this.model.songs.filter(song => {
       return song.title.toLowerCase().includes(searchTerm);
-    })
+    });
   }
 
   @action
@@ -27,7 +29,8 @@ export default class BandsBandSongsController extends Controller {
 
   //Lista ordenada de canciones
   get sortedSongs() {
-    let sortBy = this.sortBy
+    console.log('In sortedSongs');
+    let sortBy = this.sortBy;
     let isDescendingSort = false;
 
     if (sortBy.charAt(0) === '-') {
@@ -45,6 +48,13 @@ export default class BandsBandSongsController extends Controller {
       }
       return 0;
     })
+  }
+
+
+  //Mayusculas "Capitalize"
+  get newSongPlaceholder() {
+    let bandName = this.model.name;
+    return `New ${capitalize(bandName)} song`;
   }
 
 

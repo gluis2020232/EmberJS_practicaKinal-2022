@@ -80,8 +80,9 @@
 {{#if this.sortedSongs.length}}
   <ul>
     {{#each this.sortedSongs as |song|}}
-      <li class='mb-2'>
-        {{song.title}}
+      <li class="mb-2" data-test-rr="song-list-item">
+        {{!song.title}}
+        {{capitalize song.title}}
         <span class='float-right'>
           <StarRating
             @rating={{song.rating}}
@@ -113,7 +114,8 @@
     <input
       type='text'
       class='text-gray-800 bg-white rounded-md py-2 px-4'
-      placeholder='Title'
+      {{!placeholder='Title'}}
+      placeholder="this.newSongTitle"
       value={{this.title}}
       {{on 'input' this.updateTitle}}
     />
